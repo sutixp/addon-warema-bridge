@@ -1,6 +1,6 @@
 {
   "name": "Warema Bridge - Michi",
-  "version": "0.5",
+  "version": "0.6",
   "slug": "warema_bridge_mich",
   "description": "Control Warema WMS system",
   "arch": ["aarch64", "amd64", "armv7", "i386"],
