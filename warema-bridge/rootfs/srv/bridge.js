@@ -239,10 +239,10 @@ function callback(err, msg) {
         break
       case 'wms-vb-blind-position-update':
         client.publish('warema/' + msg.payload.snr + '/position', msg.payload.position.toString())
-        client.publish('warema/' + msg.payload.snr + '/tilt', msg.payload.angle.toString())
+        //client.publish('warema/' + msg.payload.snr + '/tilt', msg.payload.angle.toString())
         shade_position[msg.payload.snr] = {
           position: msg.payload.position,
-          angle: msg.payload.angle
+          angle: 0
         }
         break
       case 'wms-vb-scanned-devices':
@@ -311,7 +311,7 @@ client.on('message', function (topic, message) {
             stickUsb.vnBlindSetPosition(device, 100, 0)
             break;
           case 'OPEN':
-            stickUsb.vnBlindSetPosition(device, 0, -100)
+            stickUsb.vnBlindSetPosition(device, 0, 0)
             break;
           case 'STOP':
             stickUsb.vnBlindStop(device)
@@ -319,10 +319,10 @@ client.on('message', function (topic, message) {
         }
         break
       case 'set_position':
-        stickUsb.vnBlindSetPosition(device, parseInt(message), parseInt(shade_position[device]['angle']))
+        stickUsb.vnBlindSetPosition(device, parseInt(message), 0)
         break
       case 'set_tilt':
-        stickUsb.vnBlindSetPosition(device, parseInt(shade_position[device]['position']), parseInt(message))
+        //stickUsb.vnBlindSetPosition(device, parseInt(shade_position[device]['position']), parseInt(message))
         break
       //default:
       //  console.log('Unrecognised command from HA')
