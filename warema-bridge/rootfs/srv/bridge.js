@@ -157,12 +157,11 @@ function registerDevice(element) {
 }
 
 function registerDevices() {
-//  registerDevice({snr: 00994624, name:"Markise"  , type:25 })
-//  registerDevice({snr: 01140790, name:"PowerPlug1", type:25 })
-//  registerDevice({snr: 01399553, name:"PowerPlug2", type:25 })
-//  registerDevice({snr: 01185462, name:"Handsender", type:07})
+  registerDevice({snr: 00018856, name:"Markise oben"  , type:25 })
+  registerDevice({snr: 00020332, name:"Markise Front", type:25 })
 
-//  return;
+  return;
+	
   if (forceDevices && forceDevices.length) {
     forceDevices.forEach(element => {
       registerDevice({snr: element, type: 25})
