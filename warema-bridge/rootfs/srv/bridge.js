@@ -61,7 +61,7 @@ function registerDevice(element) {
     case "09":
       return
     case "20":
-      model = 'Plug receiver'
+      model = 'Vertical awning'
       payload = {
         ...base_payload,
         device: {
@@ -72,13 +72,7 @@ function registerDevice(element) {
         position_closed: 100,
         command_topic: 'warema/' + element.snr + '/set',
         position_topic: 'warema/' + element.snr + '/position',
-        tilt_status_topic: 'warema/' + element.snr + '/tilt',
         set_position_topic: 'warema/' + element.snr + '/set_position',
-        tilt_command_topic: 'warema/' + element.snr + '/set_tilt',
-        tilt_closed_value: 100,
-        tilt_opened_value: -100,
-        tilt_min: -100,
-        tilt_max: 100,
       }
       break
     case "21":
@@ -157,10 +151,10 @@ function registerDevice(element) {
 }
 
 function registerDevices() {
-  registerDevice({snr: 00018856, name:"Markise oben"  , type:25 })
-  registerDevice({snr: 00020332, name:"Markise Front", type:25 })
+  //registerDevice({snr: 00018856, name:"Markise oben"  , type:20 })
+  //registerDevice({snr: 00020332, name:"Markise Front", type:20 })
 
-  return;
+  //return;
 	
   if (forceDevices && forceDevices.length) {
     forceDevices.forEach(element => {
