@@ -72,7 +72,13 @@ function registerDevice(element) {
         position_closed: 100,
         command_topic: 'warema/' + element.snr + '/set',
         position_topic: 'warema/' + element.snr + '/position',
+        tilt_status_topic: 'warema/' + element.snr + '/tilt',
         set_position_topic: 'warema/' + element.snr + '/set_position',
+        tilt_command_topic: 'warema/' + element.snr + '/set_tilt',
+        tilt_closed_value: -100,
+        tilt_opened_value: 100,
+        tilt_min: -200,
+        tilt_max: 200
       }
       break
     case "21":
@@ -128,7 +134,7 @@ function registerDevice(element) {
         tilt_command_topic: 'warema/' + element.snr + '/set_tilt',
 //        tilt_closed_value: 100,
 //        tilt_opened_value: -100,
-//        tilt_min: -100,
+//        tilt_min: -00,
 //        tilt_max: 100,
       }
       break
@@ -239,10 +245,10 @@ function callback(err, msg) {
         break
       case 'wms-vb-blind-position-update':
         client.publish('warema/' + msg.payload.snr + '/position', msg.payload.position.toString())
-        //client.publish('warema/' + msg.payload.snr + '/tilt', msg.payload.angle.toString())
+        client.publish('warema/' + msg.payload.snr + '/tilt', msg.payload.angle.toString())
         shade_position[msg.payload.snr] = {
           position: msg.payload.position,
-          angle: 0
+          angle: msg.payload.angle
         }
         break
       case 'wms-vb-scanned-devices':
@@ -308,7 +314,7 @@ client.on('message', function (topic, message) {
       case 'set':
         switch (message.toString()) {
           case 'CLOSE':
-            stickUsb.vnBlindSetPosition(device, 100, 0)
+            stickUsb.vnBlindSetPosition(device, 100, -100)
             break;
           case 'OPEN':
             stickUsb.vnBlindSetPosition(device, 0, 0)
@@ -319,10 +325,10 @@ client.on('message', function (topic, message) {
         }
         break
       case 'set_position':
-        stickUsb.vnBlindSetPosition(device, parseInt(message), 0)
+        stickUsb.vnBlindSetPosition(device, parseInt(message), parseInt(shade_position[device]['angle']))
         break
       case 'set_tilt':
-        //stickUsb.vnBlindSetPosition(device, parseInt(shade_position[device]['position']), parseInt(message))
+        stickUsb.vnBlindSetPosition(device, parseInt(shade_position[device]['position']), parseInt(message))
         break
       //default:
       //  console.log('Unrecognised command from HA')
